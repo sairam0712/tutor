@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  phone        String?
+  name         String?
+  role         Role          @default(PARENT)
+  requirements Requirement[]
+  proposals    Proposal[]
+}
+
+model Requirement {
+  id          Int        @id @default(autoincrement())
+  subject     String
+  grade       String
+  description String
+  startDate   DateTime
+  duration    Int
+  amount      Int
+  phone       String
+  address     String
+  studentId   Int
+  student     User       @relation(fields: [studentId], references: [id])
+  createdAt   DateTime   @default(now())
+  status      Status     @default(PENDING)
+  proposals   Proposal[]
+}
+
+model Proposal {
+  id            Int         @id @default(autoincrement())
+  requirementId Int
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  tutorId       Int
+  tutor         User        @relation(fields: [tutorId], references: [id])
+  status        Status      @default(PENDING)
+
+  createdAt DateTime @default(now())
+
+  @@unique([requirementId, tutorId])
+}
+
+enum Status {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum Role {
+  PARENT
+  TUTOR
+}
