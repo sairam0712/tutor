@@ -3,7 +3,7 @@
 1. Clone the repository
 
 ```
-git clone https://github.com/devkrishnasai/tutor-app .
+https://github.com/sairam0712/tutor .
 ```
 
 2. Install dependencies
@@ -15,7 +15,7 @@ npm install
 3. Create a `.env` file in the root directory and add the following environment variables
 
 ```env
-DATABASE_URL="postgresql://krishna:krishna@localhost:5432/tutor?schema=public"
+DATABASE_URL="postgresql://sairam:sairam@localhost:5432/tutor?schema=public"
 ```
 
 3. Run database
